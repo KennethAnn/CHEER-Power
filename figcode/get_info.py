@@ -9,8 +9,8 @@ dict_techs_for_gen = {
     'Coal W/ CCS': 'Coal W/ CCS',
     'Gas W/O CCS': 'Gas W/O CCS',
     'Gas W/ CCS': 'Gas W/ CCS',
-    'Biomass W/O CCS': 'BE W/O CCS',
-    'Biomass W/ CCS': 'BE W/ CCS',
+    'Biomass W/O CCS': 'Biomass W/O CCS',
+    'Biomass W/ CCS': 'Biomass W/ CCS',
     'Nuclear W/O CCS': 'Nuclear',
     'Hydro W/O CCS': 'Hydro',
     'Central PV W/O CCS': 'Central PV',
@@ -27,8 +27,8 @@ dict_techs_for_capac = {
     'Coal W/ CCS': 'Coal W/ CCS',
     'Gas W/O CCS': 'Gas W/O CCS',
     'Gas W/ CCS': 'Gas W/ CCS',
-    'Biomass W/O CCS': 'BE W/O CCS',
-    'Biomass W/ CCS': 'BE W/ CCS',
+    'Biomass W/O CCS': 'Biomass W/O CCS',
+    'Biomass W/ CCS': 'Biomass W/ CCS',
     'Nuclear W/O CCS': 'Nuclear',
     'Hydro W/O CCS': 'Hydro',
     'Central PV W/O CCS': 'Central PV',
@@ -63,8 +63,8 @@ dict_colors_for_capac = {
     'Distributed PV': '#f8e5c2',
     'Onshore Wind': '#9dc2de',
     'Offshore Wind': '#badbe9',
-    'BE W/O CCS': '#98c39a',
-    'BE W/ CCS': '#516850',
+    'Biomass W/O CCS': '#98c39a',
+    'Biomass W/ CCS': '#516850',
     'Battery Storage': '#f39a8f',
     'CAS Storage': '#9dc2de',
     'Pumped Hydro': '#6497a8'
@@ -84,8 +84,8 @@ dict_colors_for_gen = {
     'Distributed PV': '#f8e5c2',
     'Onshore Wind': '#9dc2de',
     'Offshore Wind': '#badbe9',
-    'BE W/O CCS': '#98c39a',
-    'BE W/ CCS': '#516850',
+    'Biomass W/O CCS': '#98c39a',
+    'Biomass W/ CCS': '#516850',
     'Battery Discharge': '#f39a8f',
     'CAS Discharge': '#9dc2de',
     'Pumped Discharge': '#6497a8'
@@ -96,7 +96,7 @@ def get_gen_techs(dir_path):
     gen_project = pd.read_csv('%s/gen_project_annual_summary.csv' %dir_path)
     gen_project = gen_project.merge(gen_ccs_energy_load, on=['gen_energy_source', 'period'], how='left').fillna(0)
     gen_project['EnergyCCS_GWh_typical_yr'] = gen_project['EnergyCCS_GWh_typical_yr'] * (1 - gen_project['gen_ccs_energy_load'])
-    merge_tech = pd.read_csv('pack/merge_tech.csv')
+    merge_tech = pd.read_csv('merge_tech.csv')
     gen_techs = gen_project.groupby(['period','gen_tech'])[['EnergyCCS_GWh_typical_yr', 'EnergyNOCCS_GWh_typical_yr', 'Store_GWh_typical_yr']].sum().reset_index()
     gen_techs = gen_techs.merge(merge_tech, on =['gen_tech'], how='left')
     gen_techs = gen_techs.groupby(['period', 'gen_energy_source'])[['EnergyCCS_GWh_typical_yr', 'EnergyNOCCS_GWh_typical_yr', 'Store_GWh_typical_yr']].sum()
@@ -114,7 +114,7 @@ def get_gen_techs(dir_path):
 def get_capac_techs(dir_path):
     gen_project = pd.read_csv('%s/gen_project_annual_summary.csv' %dir_path)
     gen_techs = gen_project.groupby(['period','gen_tech'])[['GenCapacityCCS_MW', 'GenCapacityNOCCS_MW']].sum().reset_index()
-    merge_tech = pd.read_csv('pack/merge_tech.csv')
+    merge_tech = pd.read_csv('merge_tech.csv')
     gen_techs = gen_techs.merge(merge_tech, on =['gen_tech'], how='left')
     gen_techs = gen_techs.groupby(['period', 'gen_energy_source'])[['GenCapacityCCS_MW', 'GenCapacityNOCCS_MW']].sum()
     gen_techs.columns = ['W/ CCS', 'W/O CCS']

@@ -1,0 +1,22 @@
+gen_tech,gen_energy_source
+Battery_h1,Battery
+Battery_h4,Battery
+Battery_h8,Battery
+Battery,Battery
+CAS,CAS
+Biomass,Biomass
+Coal_largerunit,Coal
+Coal_largestunit,Coal
+Coal_smallerunit,Coal
+Coal_smallestunit,Coal
+Coal,Coal
+Gas,Gas
+Hydro_NonPumped,Hydro
+Hydro_Pumped,Pumped
+Solar_Distributed,Distributed PV
+Solar_Utility,Central PV
+Wind_Onshore,Onshore Wind
+Nuclear,Nuclear
+Wind_Offshore,Offshore Wind
+Wind_Offshore_Near,Offshore Wind
+Wind_Offshore_Far,Offshore Wind
